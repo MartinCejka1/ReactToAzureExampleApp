@@ -66,3 +66,53 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### React --> Azure Guideline
+
+** Prepare local react app reposiotory in VS code**
+
+1) npm init react-app <appname>
+2) cd <appname>
+3) add following lines to package.json:
+    "engines": {
+        "node": "10.0"
+    }
+4) npm install
+5) npm run build
+6) git init
+7) git add .
+8) git commit -m "first commit"
+9) git remote add azure <git_clone_url>
+10) git push -u azure master
+11) touch web.config 
+12) add following lines in web.config
+    <?xml version="1.0"?>
+    <configuration>
+        <system.webServer>
+            <rewrite>
+                <rules>
+                    <rule name="React Routes" stopProcessing="true">
+                        <match url=".*" />
+                        <conditions logicalGrouping="MatchAll">
+                            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                            <add input="{REQUEST_URI}" pattern="^/(api)" negate="true" />
+                        </conditions>
+                        <action type="Rewrite" url="/" />
+                    </rule>
+                </rules>
+            </rewrite>
+        </system.webServer>
+    </configuration>
+13) install following extensions: XML Tools, Azure Tools
+14) in web.config, press SHIFT+ALT+F to format xml file
+15) npm run build
+
+** Prepare Azure Environment ** 
+1) Create new resource -> WebApp
+2) Choose subsciption, resource group, name, publish (code), Rutime stack (node 10.0), Operating system (Windows), Region
+3) Next -> Allow AppInsights --> Next --> Create
+4) Wati till the app starts => Go to resource => Deployment center
+5) Source Control: Github (sign in if needed)
+6) Build provider: Kudu (App Service build service)
+7) Configure to your <git_clone_url>
