@@ -105,14 +105,21 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
         </system.webServer>
     </configuration>
 13) install following extensions: XML Tools, Azure Tools
-14) in web.config, press SHIFT+ALT+F to format xml file
+14) in web.config, press SHIFT+ALT+F to format xml file and save the file
 15) npm run build
+16) git commit -m "web.config"
+17) git push -u azure master
+
 
 ** Prepare Azure Environment ** 
+
 1) Create new resource -> WebApp
 2) Choose subsciption, resource group, name, publish (code), Rutime stack (node 10.0), Operating system (Windows), Region
 3) Next -> Allow AppInsights --> Next --> Create
 4) Wati till the app starts => Go to resource => Deployment center
 5) Source Control: Github (sign in if needed)
 6) Build provider: Kudu (App Service build service)
-7) Configure to your <git_clone_url>
+7) Configure to your <git_clone_url> --> Finish
+8) Wait for the automatic deployment to finish
+9) Browse the app url
+
